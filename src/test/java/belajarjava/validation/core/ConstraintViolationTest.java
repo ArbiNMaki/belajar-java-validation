@@ -60,4 +60,14 @@ public class ConstraintViolationTest {
             System.out.println("Path : " + violation.getPropertyPath());
         }
     }
+
+    @Test
+    void testValidationSuccess() {
+        Person person = new Person();
+        person.setFirstName("Arbi");
+        person.setLastName("Dwi Wijaya");
+
+        Set<ConstraintViolation<Object>> violations = validator.validate(person);
+        Assertions.assertEquals(0, violations.size());
+    }
 }
