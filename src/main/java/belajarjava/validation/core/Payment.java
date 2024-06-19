@@ -1,5 +1,7 @@
 package belajarjava.validation.core;
 
+import belajarjava.validation.core.group.CreditCardPaymentGroup;
+import belajarjava.validation.core.group.VirtualAccountPaymentGroup;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.LuhnCheck;
@@ -7,16 +9,19 @@ import org.hibernate.validator.constraints.Range;
 
 public class Payment {
 
-    @NotBlank(message = "Order ID must not blank!")
+    @NotBlank(message = "Order ID must not blank!", groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class})
     private String orderId;
 
-    @NotNull(message = "Amount must not null!")
-    @Range(min = 10_000L, max = 100_000_000L, message = "Amount must between 10.000 and 100.000.000")
+    @NotNull(message = "Amount must not null!", groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class})
+    @Range(min = 10_000L, max = 100_000_000L, message = "Amount must between 10.000 and 100.000.000", groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class})
     private Long amount;
 
-    @NotBlank(message = "Credit Card must not blank!")
-    @LuhnCheck(message = "Invalid Credit Card number!")
+    @NotBlank(message = "Credit Card must not blank!", groups = {CreditCardPaymentGroup.class})
+    @LuhnCheck(message = "Invalid Credit Card number!", groups = {CreditCardPaymentGroup.class})
     private  String creditCard;
+
+    @NotBlank(message = "Virtual Account must not blank!", groups = {VirtualAccountPaymentGroup.class})
+    private String virtualAccount;
 
     public @NotBlank(message = "Order ID must not blank!") String getOrderId() {
         return orderId;
@@ -42,12 +47,21 @@ public class Payment {
         this.creditCard = creditCard;
     }
 
+    public @NotBlank(message = "Virtual Account must not blank!", groups = {VirtualAccountPaymentGroup.class}) String getVirtualAccount() {
+        return virtualAccount;
+    }
+
+    public void setVirtualAccount(@NotBlank(message = "Virtual Account must not blank!", groups = {VirtualAccountPaymentGroup.class}) String virtualAccount) {
+        this.virtualAccount = virtualAccount;
+    }
+
     @Override
     public String toString() {
         return "Payment{" +
                 "orderId='" + orderId + '\'' +
                 ", amount=" + amount +
                 ", creditCard='" + creditCard + '\'' +
+                ", virtualAccount='" + virtualAccount + '\'' +
                 '}';
     }
 }
