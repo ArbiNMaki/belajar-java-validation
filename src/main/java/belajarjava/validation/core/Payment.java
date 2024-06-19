@@ -2,8 +2,11 @@ package belajarjava.validation.core;
 
 import belajarjava.validation.core.group.CreditCardPaymentGroup;
 import belajarjava.validation.core.group.VirtualAccountPaymentGroup;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 import org.hibernate.validator.constraints.LuhnCheck;
 import org.hibernate.validator.constraints.Range;
 
@@ -22,6 +25,14 @@ public class Payment {
 
     @NotBlank(message = "Virtual Account must not blank!", groups = {VirtualAccountPaymentGroup.class})
     private String virtualAccount;
+
+    @Valid
+    @NotNull(message = "Customer can't null!", groups = {
+            VirtualAccountPaymentGroup.class, CreditCardPaymentGroup.class
+    })
+    @ConvertGroup(from = CreditCardPaymentGroup.class, to = Default.class)
+    @ConvertGroup(from = VirtualAccountPaymentGroup.class, to = Default.class)
+    private Customer customer;
 
     public @NotBlank(message = "Order ID must not blank!") String getOrderId() {
         return orderId;
@@ -55,6 +66,18 @@ public class Payment {
         this.virtualAccount = virtualAccount;
     }
 
+    public @Valid @NotNull(message = "Customer can't null!", groups = {
+            VirtualAccountPaymentGroup.class, CreditCardPaymentGroup.class
+    }) Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(@Valid @NotNull(message = "Customer can't null!", groups = {
+            VirtualAccountPaymentGroup.class, CreditCardPaymentGroup.class
+    }) Customer customer) {
+        this.customer = customer;
+    }
+
     @Override
     public String toString() {
         return "Payment{" +
@@ -62,6 +85,7 @@ public class Payment {
                 ", amount=" + amount +
                 ", creditCard='" + creditCard + '\'' +
                 ", virtualAccount='" + virtualAccount + '\'' +
+                ", customer=" + customer +
                 '}';
     }
 }
