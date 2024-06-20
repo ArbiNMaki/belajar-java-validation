@@ -2,6 +2,7 @@ package belajarjava.validation.core;
 
 import belajarjava.validation.core.group.CreditCardPaymentGroup;
 import belajarjava.validation.core.group.VirtualAccountPaymentGroup;
+import belajarjava.validation.core.payload.EmailErrorPayload;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ public class Payment {
     private Long amount;
 
     @NotBlank(message = "Credit Card must not blank!", groups = {CreditCardPaymentGroup.class})
-    @LuhnCheck(message = "Invalid Credit Card number!", groups = {CreditCardPaymentGroup.class})
+    @LuhnCheck(message = "Invalid Credit Card number!", groups = {CreditCardPaymentGroup.class}, payload = {EmailErrorPayload.class})
     private  String creditCard;
 
     @NotBlank(message = "Virtual Account must not blank!", groups = {VirtualAccountPaymentGroup.class})
