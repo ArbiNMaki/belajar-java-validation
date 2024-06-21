@@ -1,6 +1,5 @@
 package belajarjava.validation.core.constraint;
 
-import belajarjava.validation.core.enums.CaseMode;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -12,14 +11,12 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Constraint(validatedBy = {CheckCaseValidator.class})
+@Constraint(validatedBy = {CheckPasswordValidator.class})
 @Target({ FIELD, ANNOTATION_TYPE, TYPE })
 @Retention(RUNTIME)
-public @interface CheckCase {
+public @interface CheckPassword {
 
-    CaseMode mode();
-
-    String message() default "Invalid case format.";
+    String message() default "Password must same with Retype Password.";
 
     Class<?>[] groups() default { };
 
