@@ -1,5 +1,7 @@
 package belajarjava.validation.core;
 
+import belajarjava.validation.core.constraint.CheckCase;
+import belajarjava.validation.core.enums.CaseMode;
 import belajarjava.validation.core.group.CreditCardPaymentGroup;
 import belajarjava.validation.core.group.VirtualAccountPaymentGroup;
 import belajarjava.validation.core.payload.EmailErrorPayload;
@@ -14,6 +16,8 @@ import org.hibernate.validator.constraints.Range;
 
 public class Payment {
 
+    @CheckCase(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
+            mode = CaseMode.UPPER, message = "{order.id.upper}")
     @NotBlank(message = "{order.id.notblank}",
             groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class})
     @Size(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
