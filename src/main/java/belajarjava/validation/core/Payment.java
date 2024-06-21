@@ -1,14 +1,12 @@
 package belajarjava.validation.core;
 
-import belajarjava.validation.core.constraint.CheckCase;
-import belajarjava.validation.core.enums.CaseMode;
+import belajarjava.validation.core.constraint.CheckOrderId;
 import belajarjava.validation.core.group.CreditCardPaymentGroup;
 import belajarjava.validation.core.group.VirtualAccountPaymentGroup;
 import belajarjava.validation.core.payload.EmailErrorPayload;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
 import org.hibernate.validator.constraints.LuhnCheck;
@@ -16,12 +14,8 @@ import org.hibernate.validator.constraints.Range;
 
 public class Payment {
 
-    @CheckCase(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
-            mode = CaseMode.UPPER, message = "{order.id.upper}")
-    @NotBlank(message = "{order.id.notblank}",
+    @CheckOrderId(message = "{order.id.invalid}",
             groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class})
-    @Size(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
-            min = 1, max = 10, message = "{order.id.size}")
     private String orderId;
 
     @NotNull(message = "Amount must not null!", groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class})

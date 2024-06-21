@@ -3,7 +3,6 @@ package belajarjava.validation.core.constraint;
 import belajarjava.validation.core.enums.CaseMode;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.constraints.NotBlank;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -14,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
 @Constraint(validatedBy = {CheckCaseValidator.class})
-@Target({ FIELD })
+@Target({ FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 public @interface CheckCase {
 
